@@ -1,4 +1,3 @@
-// In DeleteModal.js (example)
 import React from 'react';
 
 export default function DeleteModal({ onDelete, onCancel, taskId }) {

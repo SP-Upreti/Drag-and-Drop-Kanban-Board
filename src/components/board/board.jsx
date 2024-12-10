@@ -4,6 +4,7 @@ import DeleteModal from '../modal/deleteModal';
 import AddTaskModal from '../modal/AddTaskModal';
 import TaskBoard from './TaskBoard';
 import Button from '../button/Button';
+import Footer from '../footer/footer';
 
 export default function Board() {
 
@@ -270,7 +271,9 @@ export default function Board() {
                     onAddTask={addTask}
                 />
             )}
+            <Footer />
         </section>
     );
 }
 
+//additional features and bugs will be solved later after exam

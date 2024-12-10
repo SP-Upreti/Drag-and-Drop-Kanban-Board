@@ -5,6 +5,7 @@ import TaskColumn from '../utils/taskColumn';
 const TaskBoard = ({ onDragEnd, handleDelete, filteredStarted, filteredInProgress, filteredCompleted }) => {
     return (
         <div className="bg-slate-200 p-8 relative my-5 rounded-md max-h-[70vh] overflow-auto">
+            {/* everything pretty clear here */}
             <DragDropContext onDragEnd={onDragEnd}>
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
                     <Droppable droppableId="started" aria-label="Started tasks">
