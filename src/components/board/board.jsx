@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import TaskColumn from '../utils/taskColumn';
 import { taskData } from '../../data/Data';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import DeleteModal from '../modal/deleteModal';
 import AddTaskModal from '../modal/AddTaskModal';
+import TaskBoard from './TaskBoard';
+import Button from '../button/Button';
 
 export default function Board() {
     // Retrieve tasks from localStorage or use default taskData
@@ -214,6 +214,7 @@ export default function Board() {
 
     return (
         <section className="max-w-7xl mx-auto p-4 my-10 relative">
+
             <div>
                 <h2 className="text-3xl font-semibold">Personal</h2>
                 <p className="text-lg">A board to keep track of personal tasks</p>
@@ -228,69 +229,23 @@ export default function Board() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="p-2 border rounded w-[25rem]"
                 />
-                <button onClick={() => setShowAddTaskModal(true)} className='bg-blue-500 text-white px-6 py-2 rounded-md'>Add Task</button>
+                <Button
+                    onClick={() => setShowAddTaskModal(true)}
+                    text={'add task'}
+                    classes={'ring-blue-500 bg-blue-500'}
+                />
             </div>
 
             {/* Task Board */}
-            <div className="bg-slate-200 p-8 relative my-5 rounded-md max-h-[70vh] overflow-auto">
-                <DragDropContext onDragEnd={onDragEnd}>
-                    <div className="grid grid-cols-3 gap-10">
-                        <Droppable droppableId="started" aria-label="Started tasks">
-                            {(provided) => (
-                                <div
-                                    {...provided.droppableProps}
-                                    ref={provided.innerRef}
-                                    role="list"
-                                    aria-label="Started tasks"
-                                >
-                                    <TaskColumn
-                                        deleteTask={handleDelete}
-                                        title="Started"
-                                        data={filteredStarted}
-                                    />
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
-
-                        <Droppable droppableId="inProgress" aria-label="In Progress tasks">
-                            {(provided) => (
-                                <div
-                                    {...provided.droppableProps}
-                                    ref={provided.innerRef}
-                                    role="list"
-                                    aria-label="In Progress tasks"
-                                >
-                                    <TaskColumn
-                                        deleteTask={handleDelete}
-                                        title="In Progress"
-                                        data={filteredInProgress}
-                                    />
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
-
-                        <Droppable droppableId="completed" aria-label="Completed tasks">
-                            {(provided) => (
-                                <div
-                                    {...provided.droppableProps}
-                                    ref={provided.innerRef}
-                                    role="list"
-                                    aria-label="Completed tasks"
-                                >
-                                    <TaskColumn
-                                        deleteTask={handleDelete}
-                                        title="Completed"
-                                        data={filteredCompleted}
-                                    />
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
-                    </div>
-                </DragDropContext>
-            </div>
+            <TaskBoard
+                started={started}
+                inProgress={inProgress}
+                onDragEnd={onDragEnd}
+                completed={completed}
+                filteredCompleted={filteredCompleted}
+                filteredInProgress={filteredInProgress}
+                filteredStarted={filteredStarted}
+            />
 
             {/* Delete Modal */}
             {deleteModal && (
@@ -304,9 +259,10 @@ export default function Board() {
             {showAddTaskModal && (
                 <AddTaskModal
                     onClose={() => setShowAddTaskModal(false)}
-                    onAddTask={addTask} // Pass addTask function to modal
+                    onAddTask={addTask} 
                 />
             )}
         </section>
     );
 }
+

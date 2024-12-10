@@ -1,11 +1,10 @@
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import DeleteModal from '../modal/deleteModal';
 
 export default function TaskColumn({ data, title, deleteTask }) {
     return (
         <div>
-            <span className={`${title == "Started" ? "bg-orange-400 text-white" : title == "In Progress" ? "bg-blue-500 text-white" : "bg-green-500 text-white"} capitalize py-1 px-4 rounded-full`}>
+            <span className={`${title === "Started" ? "bg-orange-400 text-white" : title === "In Progress" ? "bg-blue-500 text-white" : "bg-green-500 text-white"} capitalize py-1 px-4 rounded-full`}>
                 {title}
             </span>
             <ul className="my-4">
