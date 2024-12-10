@@ -1,5 +1,6 @@
 // AddTaskModal.js
 import React, { useState } from 'react';
+import Button from '../button/Button';
 
 export default function AddTaskModal({ onClose, onAddTask }) {
     const [title, setTitle] = useState('');
@@ -39,19 +40,15 @@ export default function AddTaskModal({ onClose, onAddTask }) {
                         ></textarea>
                     </div>
                     <div className="flex justify-end gap-4">
-                        <button
-                            type="button"
+                        <Button
+                            text={'add task'}
+                            classes={'bg-blue-500 ring-blue-500'}
+                        />
+                        <Button
+                            text={'Cancel'}
                             onClick={onClose}
-                            className="text-gray-500 border border-gray-300 px-4 py-2 rounded-md"
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            type="submit"
-                            className="bg-blue-500 text-white px-4 py-2 rounded-md"
-                        >
-                            Add Task
-                        </button>
+                            classes={'text-black bg-slate-50 border'}
+                        />
                     </div>
                 </form>
             </div>

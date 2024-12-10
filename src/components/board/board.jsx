@@ -12,7 +12,7 @@ export default function Board() {
 
     // Retrieve tasks from localStorage or use default taskData
     const loadDataFromLocalStorage = () => {
-        const savedTasks = localStorage.getItem('task');
+        const savedTasks = localStorage.getItem('tasks');
         if (savedTasks) {
             try {
                 const parsedTasks = JSON.parse(savedTasks);
