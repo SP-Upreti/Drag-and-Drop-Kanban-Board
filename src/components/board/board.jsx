@@ -43,6 +43,7 @@ export default function Board() {
     const [completed, setCompleted] = useState(loadDataFromLocalStorage().completed);
 
 
+    //something went wrong here  useHistory isnt working properly so decided not to use
     // const { state, pushToHistory, undo, redo } = useHistory()
 
     // History stacks for undo and redo
@@ -66,14 +67,14 @@ export default function Board() {
     const filteredInProgress = filterTasks(inProgress);
     const filteredCompleted = filterTasks(completed);
 
-    // Save to localStorage
+    // this will save  tasks to localStorage
     const saveToLocalStorage = () => {
         const tasks = {
             started,
             inProgress,
             completed
         };
-        localStorage.setItem('task', JSON.stringify(tasks));
+        localStorage.setItem('tasks', JSON.stringify(tasks));
     };
 
     // Push current state to undo stack and clear redo stack
@@ -90,6 +91,7 @@ export default function Board() {
     };
 
     // On Drag End: update state and localStorage
+    //this part was little tough for me took help from youtube and google
     const onDragEnd = (result) => {
         const { source, destination } = result;
 
@@ -111,6 +113,7 @@ export default function Board() {
 
         saveToLocalStorage();
     };
+
 
     // Delete task functionality
     const deleteTask = (taskId) => {
