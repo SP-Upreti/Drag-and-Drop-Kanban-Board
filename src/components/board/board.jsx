@@ -6,9 +6,13 @@ import TaskBoard from './TaskBoard';
 import Button from '../button/Button';
 
 export default function Board() {
+
+    const [deleteModal, setDeleteModal] = useState(false);
+    const [taskToDelete, setTaskToDelete] = useState(null);
+
     // Retrieve tasks from localStorage or use default taskData
     const loadDataFromLocalStorage = () => {
-        const savedTasks = localStorage.getItem('tasks');
+        const savedTasks = localStorage.getItem('task');
         if (savedTasks) {
             try {
                 const parsedTasks = JSON.parse(savedTasks);
@@ -37,8 +41,9 @@ export default function Board() {
     const [started, setStarted] = useState(loadDataFromLocalStorage().started);
     const [inProgress, setInProgress] = useState(loadDataFromLocalStorage().inProgress);
     const [completed, setCompleted] = useState(loadDataFromLocalStorage().completed);
-    const [deleteModal, setDeleteModal] = useState(false);
-    const [taskToDelete, setTaskToDelete] = useState(null);
+
+
+    // const { state, pushToHistory, undo, redo } = useHistory()
 
     // History stacks for undo and redo
     const [undoStack, setUndoStack] = useState([]);
@@ -201,16 +206,15 @@ export default function Board() {
 
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
 
-    // Add task to the board
     const addTask = (task) => {
         setStarted((prevStarted) => {
             const updatedStarted = [...prevStarted, task];
             return updatedStarted;
         });
-
+        saveToLocalStorage(); // Ensure localStorage is updated after the state change
         pushToHistory(); // Save to history after adding a new task
-        saveToLocalStorage(); // Update localStorage
     };
+
 
     return (
         <section className="max-w-7xl mx-auto p-4 my-10 relative">
@@ -221,7 +225,7 @@ export default function Board() {
             </div>
 
             {/* Search Bar */}
-            <div className="my-5 flex justify-between items-center gap-10">
+            <div className="my-5 flex justify-between items-center gap-5 sm:gap-10 flex-wrap">
                 <input
                     type="text"
                     placeholder="Search tasks..."
@@ -242,6 +246,7 @@ export default function Board() {
                 inProgress={inProgress}
                 onDragEnd={onDragEnd}
                 completed={completed}
+                handleDelete={handleDelete}
                 filteredCompleted={filteredCompleted}
                 filteredInProgress={filteredInProgress}
                 filteredStarted={filteredStarted}
@@ -259,7 +264,7 @@ export default function Board() {
             {showAddTaskModal && (
                 <AddTaskModal
                     onClose={() => setShowAddTaskModal(false)}
-                    onAddTask={addTask} 
+                    onAddTask={addTask}
                 />
             )}
         </section>
